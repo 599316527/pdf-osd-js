@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, shallowRef, computed } from 'vue'
-import { type DetectData } from 'tesseract.js'
 import { SuccessFilled, WarningFilled, Failed } from '@element-plus/icons-vue'
 import { compact } from 'lodash-es'
 import { CheckStatus } from './common'
-import { checkPdf } from './check'
+import { checkPdf } from './pdf'
+import {type OsdDetectResult} from './osd'
 import Pages from './Pages/Index.vue'
 
 const status = ref(CheckStatus.Waiting)
-const result = shallowRef<DetectData[]>([])
+const result = shallowRef<OsdDetectResult[]>([])
 const error = shallowRef<Error | undefined>(undefined)
 const progress = ref(0)
 const isReady = computed(() => {
@@ -25,7 +25,7 @@ const { file } = defineProps({
 const invalidResults = computed(() => {
   return compact(
     result.value.map((r, i) => {
-      if (r.orientation_degrees !== 0 && r.orientation_confidence! >= 1) {
+      if (r.orientation_degrees !== 0) {
         return { ...r, pageIndex: i }
       }
     }),
@@ -36,7 +36,7 @@ const briefTip = computed(() => {
   if (!invalidResults.value.length) {
     return `共${result.value.length}页，无异常`
   }
-  const pages = invalidResults.value.map((r) => r.pageIndex)
+  const pages = invalidResults.value.map((r) => r.pageIndex + 1)
   return `共${result.value.length}页，第${pages.join('、')}页异常`
 })
 
@@ -62,12 +62,13 @@ defineExpose({
       <div class="title">
         <strong>{{ file.name }}</strong>
         <span v-if="status === CheckStatus.Waiting">
-          <el-tag type="info">等待中</el-tag>
+          <el-tag type="info">等待检测</el-tag>
         </span>
         <span v-else-if="status === CheckStatus.Processing">
-          <el-progress class="progress" :percentage="Math.floor(progress * 100)" />
+          <el-progress class="progress" :percentage="Math.floor(progress * 100)">检测中</el-progress>
         </span>
         <span v-else-if="status === CheckStatus.Success">
+          检测完成
           <template v-if="invalidResults.length">
             <el-icon class="warning"><WarningFilled /></el-icon>
           </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, type PropType, watch } from 'vue'
-import { type DetectData } from 'tesseract.js'
-import { renderPdfPages } from '../check'
+import {type OsdDetectResult} from '../osd'
+import { renderPdfPages } from '../pdf'
 import PageItem from './Item.vue'
 
 type PageItemProps = InstanceType<typeof PageItem>['$props']
@@ -12,7 +12,7 @@ const { file, result, visible } = defineProps({
     required: true,
   },
   result: {
-    type: Array as PropType<DetectData[]>,
+    type: Array as PropType<OsdDetectResult[]>,
     required: true,
   },
   visible: Boolean,
@@ -47,7 +47,10 @@ function handleClick(i: number) {
 <template>
   <div class="pages-view" v-if="visible && canvases.length">
     <PageItem
-      class="page"
+      :class="{
+        page: true,
+        abnormal: r.orientation_degrees !== 0,
+      }"
       v-for="(r, i) in result"
       :key="i"
       :page-index="i"
@@ -56,8 +59,8 @@ function handleClick(i: number) {
       @click="handleClick(i)"
     />
 
-    <el-dialog v-model="showDialog">
-      <PageItem v-bind="showItemProps" />
+    <el-dialog v-model="showDialog" width="80%" center v-if="showItemProps">
+      <PageItem class="dialog-item" v-bind="showItemProps" />
     </el-dialog>
   </div>
 </template>
@@ -71,5 +74,15 @@ function handleClick(i: number) {
 }
 .page {
   border: 1px solid yellow;
+
+  &.abnormal {
+    border-color: red;
+  }
+}
+
+.dialog-item {
+  :deep(img) {
+    max-width: 100%;
+  }
 }
 </style>

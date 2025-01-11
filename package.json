@@ -14,18 +14,16 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
-    "@tesseract.js-data/chi_sim": "^1.0.0",
-    "@tesseract.js-data/eng": "^1.0.0",
-    "@tesseract.js-data/osd": "^1.0.0",
     "element-plus": "^2.9.1",
     "lodash-es": "^4.17.21",
+    "nanoevents": "^9.1.0",
     "pdfjs-dist": "^4.10.38",
-    "tesseract.js": "^5.1.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
+    "@types/emscripten": "^1.39.13",
     "@types/node": "^22.10.2",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/eslint-config-prettier": "^10.1.0",

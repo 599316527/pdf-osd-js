@@ -2,13 +2,13 @@
 import { ref, shallowRef, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 import File from '../components/File.vue'
-import { osdCheckerPromise } from './check'
+import { osdEngineReadyPromise } from './osd'
 
 const files = shallowRef<File[]>([])
 const fileRefs = shallowRef<InstanceType<typeof File>[]>()
 
 const isModelLoading = ref(true)
-osdCheckerPromise.then(() => {
+osdEngineReadyPromise.then(() => {
   isModelLoading.value = false
 })
 
