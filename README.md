@@ -1,6 +1,9 @@
 # pdf-orientation-check
 
-This template should help get you started developing with Vue 3 in Vite.
+Detect whether there are pages with incorrect page orientation in the PDF file with pdf.js and tesseract(wasm).
+
+Fully computed on the client side.
+
 
 ## Recommended IDE Setup
 
