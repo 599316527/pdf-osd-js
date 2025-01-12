@@ -36,10 +36,10 @@ std::string detectOrientationScript(std::string filename)
     const char* script_name;
     float script_conf;
     api->DetectOrientationScript(&orient_deg, &orient_conf, &script_name, &script_conf);
-    printf("************\n Orientation in degrees: %d\n Orientation confidence: %.2f\n"
-        " Script: %s\n Script confidence: %.2f\n",
-        orient_deg, orient_conf,
-        script_name, script_conf);
+    // printf("************\n Orientation in degrees: %d\n Orientation confidence: %.2f\n"
+    //     " Script: %s\n Script confidence: %.2f\n",
+    //     orient_deg, orient_conf,
+    //     script_name, script_conf);
 
     pixDestroy(&image);
     

@@ -1,3 +1,6 @@
+// put the content of this file at the beginning of the generated osd.js file
+// to communicate with the main thread
+
 let onOsdEngineReady_;
 const osdEngineReadyPromise = new Promise((resolve) => {
   onOsdEngineReady_ = resolve;
